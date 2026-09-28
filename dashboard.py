@@ -18,49 +18,89 @@ if not LOG_FILE.exists():
     st.warning("No monitoring data found yet.")
     st.stop()
 
-df = pd.read_csv(LOG_FILE)
+df = pd.read_csv(
+    LOG_FILE,
+    engine="python",
+    on_bad_lines="skip"
+)
 
 if df.empty:
     st.info("No chatbot interactions have been recorded yet.")
     st.stop()
 
-df["retrieval_time_seconds"] = pd.to_numeric(
-    df["retrieval_time_seconds"],
-    errors="coerce"
-)
+if "retrieval_time" in df.columns:
+    df["retrieval_time"] = pd.to_numeric(
+        df["retrieval_time"],
+        errors="coerce"
+    )
 
-df["generation_time_seconds"] = pd.to_numeric(
-    df["generation_time_seconds"],
-    errors="coerce"
-)
+if "total_latency" in df.columns:
+    df["total_latency"] = pd.to_numeric(
+        df["total_latency"],
+        errors="coerce"
+    )
 
-df["total_latency_seconds"] = pd.to_numeric(
-    df["total_latency_seconds"],
-    errors="coerce"
-)
+if "retrieval_time_seconds" in df.columns:
+    df["retrieval_time_seconds"] = pd.to_numeric(
+        df["retrieval_time_seconds"],
+        errors="coerce"
+    )
 
-df["total_tokens"] = pd.to_numeric(
-    df["total_tokens"],
-    errors="coerce"
-)
+if "generation_time_seconds" in df.columns:
+    df["generation_time_seconds"] = pd.to_numeric(
+        df["generation_time_seconds"],
+        errors="coerce"
+    )
+
+if "total_latency_seconds" in df.columns:
+    df["total_latency_seconds"] = pd.to_numeric(
+        df["total_latency_seconds"],
+        errors="coerce"
+    )
+
+if "total_tokens" in df.columns:
+    df["total_tokens"] = pd.to_numeric(
+        df["total_tokens"],
+        errors="coerce"
+    )
 
 total_queries = len(df)
 
-average_latency = df["total_latency_seconds"].mean()
+if "total_latency_seconds" in df.columns:
+    average_latency = df["total_latency_seconds"].mean()
+elif "total_latency" in df.columns:
+    average_latency = df["total_latency"].mean()
+else:
+    average_latency = 0
 
-average_retrieval_time = df["retrieval_time_seconds"].mean()
+if "retrieval_time_seconds" in df.columns:
+    average_retrieval_time = df["retrieval_time_seconds"].mean()
+elif "retrieval_time" in df.columns:
+    average_retrieval_time = df["retrieval_time"].mean()
+else:
+    average_retrieval_time = 0
 
-average_generation_time = df["generation_time_seconds"].mean()
+if "generation_time_seconds" in df.columns:
+    average_generation_time = df["generation_time_seconds"].mean()
+else:
+    average_generation_time = 0
 
-total_tokens = df["total_tokens"].sum()
+if "total_tokens" in df.columns:
+    total_tokens = df["total_tokens"].sum()
+else:
+    total_tokens = 0
 
-positive_feedback = (
-    df["feedback"] == "positive"
-).sum()
+if "feedback" in df.columns:
+    positive_feedback = (
+        df["feedback"] == "positive"
+    ).sum()
 
-negative_feedback = (
-    df["feedback"] == "negative"
-).sum()
+    negative_feedback = (
+        df["feedback"] == "negative"
+    ).sum()
+else:
+    positive_feedback = 0
+    negative_feedback = 0
 
 col1, col2, col3, col4 = st.columns(4)
 
@@ -117,19 +157,21 @@ st.plotly_chart(
     use_container_width=True
 )
 
-st.subheader("Token Usage")
+if "total_tokens" in df.columns:
 
-fig_tokens = px.bar(
-    df,
-    x="timestamp",
-    y="total_tokens",
-    title="Token Usage Per Query"
-)
+    st.subheader("Token Usage")
 
-st.plotly_chart(
-    fig_tokens,
-    use_container_width=True
-)
+    fig_tokens = px.bar(
+        df,
+        x="timestamp",
+        y="total_tokens",
+        title="Token Usage Per Query"
+    )
+
+    st.plotly_chart(
+        fig_tokens,
+        use_container_width=True
+    )
 
 st.subheader("User Feedback")
 

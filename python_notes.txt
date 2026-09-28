@@ -1,0 +1,41 @@
+
+Python Programming Basics
+Python is a high-level, general-purpose programming language known for its simple and readable syntax.
+
+Variables:
+A variable is a name used to store a value.
+Example:
+name = "Divya"
+age = 26
+
+Python Data Types:
+Common Python data types include int, float, string, boolean, list, tuple, set, and dictionary.
+
+Conditional Statements:
+Python uses if, elif, and else statements to make decisions based on conditions.
+
+Loops:
+Python provides for loops and while loops for repeating a block of code.
+
+Functions:
+A function is a reusable block of code designed to perform a specific task.
+Functions are created using the def keyword.
+
+Lists:
+A list is an ordered and changeable collection of items.
+Example:
+fruits = ["apple", "banana", "orange"]
+
+Dictionaries:
+A dictionary stores data as key-value pairs.
+Example:
+student = {"name": "Divya", "age": 26}
+
+Exception Handling:
+Python uses try and except blocks to handle errors without stopping the entire program.
+
+Object-Oriented Programming:
+Python supports object-oriented programming using classes and objects.
+
+Machine Learning:
+Machine learning is a branch of artificial intelligence in which computers learn patterns from data and use those patterns to make predictions or decisions.

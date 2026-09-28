@@ -1,0 +1,15 @@
+timestamp,question,retrieved_context,answer,retrieval_time,total_latency,feedback
+2026-09-28 16:43:42,What are Python data types?,"Python Data Types:
+Common Python data types include int, float, string, boolean, list, tuple, set, and dictionary.
+
+Conditional Statements:
+Python uses if, elif, and else statements to make decisions based on conditions.
+
+Python Programming Basics
+Python is a high-level, general-purpose programming language known for its simple and readable syntax.
+
+Variables:
+A variable is a name used to store a value.
+Example:
+name = ""Divya""
+age = 26","Python data types include int, float, string, boolean, list, tuple, set, and dictionary.",0.0563,22.1874,not_provided
